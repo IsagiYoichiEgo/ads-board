@@ -17,6 +17,7 @@ textarea { resize: vertical; }
 input:focus, textarea:focus, button:focus-visible { outline: 3px solid #b9aef8; outline-offset: 2px; }
 button { width: fit-content; padding: 12px 18px; border: 0; border-radius: 10px; background: #5b42c5; color: #fff; font-weight: 700; cursor: pointer; }
 button:disabled { cursor: wait; opacity: .65; }
+input[type="file"]::file-selector-button { margin-right: 10px; padding: 7px 10px; border: 1px solid #bec8d8; border-radius: 7px; color: #172033; background: #f3f5f8; font: inherit; font-weight: 650; }
 .secondary { background: #e9e5ff; color: #3e2a98; }
 .optional { color: #738096; font-size: .85rem; font-weight: 500; }
 .ads-section { margin-top: 44px; }
@@ -27,6 +28,7 @@ button:disabled { cursor: wait; opacity: .65; }
 .ad-card h3 { margin: 0 0 8px; font-size: 1.15rem; }
 .ad-card p { color: #5b6678; line-height: 1.45; }
 .ad-card .price { margin-bottom: 0; color: #2d207e; font-size: 1.1rem; font-weight: 800; }
+.delete-button { margin-top: 12px; padding: 8px 12px; background: #fdebed; color: #8a2832; }
 .status { margin: 18px 0 0; padding: 12px 14px; border-radius: 10px; }
 .status.loading { color: #285077; background: #e9f2ff; }
 .status.success { color: #1b663e; background: #e4f8e9; }

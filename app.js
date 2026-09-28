@@ -42,6 +42,11 @@
     return undefined;
   }
 
+  async function deleteAdRequest(id, fetchImpl) {
+    const response = await fetchImpl(`${API_URL}/${id}`, { method: 'DELETE' });
+    if (!response.ok) throw new Error('Не удалось удалить объявление.');
+  }
+
   function initPage() {
     const form = document.querySelector('#ad-form');
     const list = document.querySelector('#ads-list');
@@ -65,8 +70,28 @@
       title.textContent = ad.title || 'Без названия';
       description.textContent = ad.description || 'Описание отсутствует';
       price.className = 'price';
-      price.textContent = `${Number(ad.price).toLocaleString('ru-RU')} ₸`;
+      price.textContent = `${Number(ad.price).toLocaleString('ru-RU')} сом`;
       article.append(title, description, price);
+
+      if (Number.isInteger(ad.id)) {
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'delete-button';
+        deleteButton.textContent = 'Удалить';
+        deleteButton.addEventListener('click', async () => {
+          deleteButton.disabled = true;
+          try {
+            await deleteAdRequest(ad.id, fetch);
+            setStatus(listStatus, 'success', 'Объявление удалено. Список обновлён.');
+            await loadAds();
+          } catch (error) {
+            setStatus(listStatus, 'error', 'Не удалось удалить объявление.');
+          } finally {
+            deleteButton.disabled = false;
+          }
+        });
+        article.append(deleteButton);
+      }
 
       const imageUrl = resolveImageUrl(ad.image_url);
       if (imageUrl) {
@@ -130,5 +155,5 @@
     initPage();
   }
 
-  return { API_URL, validateAdInput, validateAdsResponse, resolveImageUrl, createAdRequest };
+  return { API_URL, validateAdInput, validateAdsResponse, resolveImageUrl, createAdRequest, deleteAdRequest };
 });
